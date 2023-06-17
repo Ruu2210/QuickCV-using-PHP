@@ -1,14 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <?php 
-    echo "Hello";
-    ?>
-</body>
-</html>
+<?php
+require('dnlib/load.php');
+
+$action -> helper -> route('/',function(){
+ //echo "This is HomePage";
+ global $action;
+ $data['title']='Make & share Resume Online';
+
+ $action->view->load('header',$data);
+ $action->view->load('content');
+ $action->view->load('footer');
+
+});
+
+$action -> helper -> route('signup',function(){
+    global $action;
+    $data['title']='Signup-Resume Manager';
+    $action->view->load('header',$data);
+}); 
