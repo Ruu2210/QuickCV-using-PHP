@@ -1,21 +1,37 @@
 <?php
 
 class Helper{
-    public function loadCss($file_name){
-      return ASSET_URL.'css/'.$file_name;
+  public static $isPageIsAvailable=false;
+ 
+     public function loadCss($file_name){
+      return ASSET_URL.'css/'.$file_name.'?v='.time();
+    }
+    public function redirect($route){
+      header("location:".SITE_URL.$route);
     }
     public function loadjs($file_name){
       return ASSET_URL.'js/'.$file_name;
     }
     public function loadimage($file_name){
-      return ASSET_URL.'image/'.$file_name;
+      return ASSET_URL.'images/'.$file_name;
     }
     
+    public function isAnyEmpty($array){
+     foreach($array as $key=> $value){
+      if(!$value) return $key;
+     }
+     return false;
+    }
+
+    public function url($route){
+      return SITE_URL.$route;
+    }
     //route function
     public function route($path_url,$function){
         $address_bar_url = $_SERVER['PATH_INFO'] ?? NULL;
 
-        if(!$address_bar_url && $path_url=='/'){
+        if(!$address_bar_url && $path_url=='/'){ 
+          self::$isPageIsAvailable = true;
             $function(array());
         }
 
@@ -44,6 +60,9 @@ class Helper{
           }
         }
         
-        if($is_valid) $function($data);
+        if($is_valid){
+        self::$isPageIsAvailable = true;
+        $function($data);
+        }
     }
 }

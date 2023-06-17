@@ -43,18 +43,21 @@ class Database{
         $label = substr_replace($label ,'',-1);
         return $label;
       }
-
+      public function clean($data){
+        return $this->connection->real_escape_string($data);
+       }
       //dynamic function to insert data 
       public function insert($table, $columns, $values){
         $label = $this->getLabels($values);
-        $query = "INSERT INTO $table($columns) VALUES(?,?)";
-        $obj=$this->connection->prepare($query);
+        $query = "INSERT INTO $table($columns) VALUES($label)";
+        $obj= $this->connection->prepare($query);
         $obj-> bind_param($this->getBindParmsDataType($values),...$values);
         return $obj->execute();
       }
       
       public function read($table, $columns="*", $conditions=''){
         $query = "SELECT $columns FROM $table $conditions";
+       // die($query);
          $result = $this->connection->query($query);
          return $result->fetch_all(true);
 
