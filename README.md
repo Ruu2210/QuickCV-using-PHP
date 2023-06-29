@@ -1,4 +1,4 @@
-# Resume-Manager-using-PHP
+# QuickCV-using-PHP
 <h1>QuickCV Using PHP</h1>
 <p>
   Developed a dynamic CV Builder application using PHP and implemented various essential concepts and features.
